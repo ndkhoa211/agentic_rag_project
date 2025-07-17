@@ -11,7 +11,7 @@ from graph.state import GraphState
 def generate(state: GraphState) -> Dict[str, Any]:
     print("-----GENERATE-----")
     question = state["question"]
-    documents = state["document"]
+    documents = state["documents"]
 
     # update 'generation' key in our graph state with LLM response
     generation = generation_chain.invoke({"context": documents, "question": question})
