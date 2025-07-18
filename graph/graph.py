@@ -16,6 +16,10 @@ from graph.chains.hallucination_grader import hallucination_grader
 from graph.chains.answer_grader import answer_grader
 
 
+# chain from Adaptive-RAG
+from graph.chains.router import RouteQuery, question_router
+
+
 # at 'grade_documents' node, decide which node to go next: generate vs. web_search
 def decide_to_generate(state: GraphState):
     print("-----ACCESS GRADE DOCUMENTS-----")
@@ -64,6 +68,24 @@ def grade_generation_grounded_in_documents_and_question(state: GraphState) -> st
         return "not supported"
 
 
+# Adaptive-RAG: define 'route_question' function to decide which entry_point to go
+# Two entry_point: 'WEB_SEARCH' and 'RETRIEVE'
+# 1. 'WEB_SEARCH' -> when question is not related to vectorstore
+# 2. 'RETRIEVE' -> when question is related to vectorstore
+def route_question(state: GraphState) -> str:
+    print("-----ROUTE QUESTION-----")
+    question = state["question"]
+
+    # invoke the router chain
+    source: RouteQuery = question_router.invoke({"question": question})
+    if source.datasource == WEB_SEARCH:  # route to 'web_search' node
+        print("-----ROUTE QUESTION TO WEB SEARCH-----")
+        return WEB_SEARCH
+    elif source.datasource == "vectorstore":  # route to 'retrieve' node
+        print("-----ROUTE QUESTION TO VECTORSTORE-----")
+        return RETRIEVE
+
+
 # let's build the graph
 builder = StateGraph(GraphState)
 
@@ -72,7 +94,15 @@ builder.add_node(GRADE_DOCUMENTS, grade_documents)
 builder.add_node(WEB_SEARCH, web_search)
 builder.add_node(GENERATE, generate)
 
-builder.set_entry_point(RETRIEVE)
+# builder.set_entry_point(RETRIEVE)
+# add conditional entry point
+builder.set_conditional_entry_point(
+    route_question,
+    {
+        WEB_SEARCH: WEB_SEARCH,
+        RETRIEVE: RETRIEVE,
+    },
+)
 
 builder.add_edge(RETRIEVE, GRADE_DOCUMENTS)
 
@@ -108,4 +138,5 @@ graph = builder.compile()
 # generate mermaid .png
 # graph.get_graph().draw_mermaid_png(output_file_path="agentic_RAG_graph.png")
 # graph.get_graph().draw_mermaid_png(output_file_path="Corrective_RAG_graph.png")
-graph.get_graph().draw_mermaid_png(output_file_path="Self_RAG_graph.png")
+# graph.get_graph().draw_mermaid_png(output_file_path="Self_RAG_graph.png")
+graph.get_graph().draw_mermaid_png(output_file_path="Adaptive_RAG_graph.png")
