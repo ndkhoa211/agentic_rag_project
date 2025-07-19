@@ -2,8 +2,8 @@
 
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-blue?logo=python)](https://www.python.org/) 
 [![Tavily Search](https://img.shields.io/badge/Tavily-Enabled-00b48a?logo=search\&logoColor=white)](https://www.tavily.com/) 
-[![Pinecone Vector DB](https://img.shields.io/badge/Pinecone-Vector_DB-3776AB?logo=pinecone\&logoColor=white)]([https://www.pinecone.io/](https://app.pinecone.io/organizations/-OQOYTa7PD5A_F9pFlNC/projects/0fed2f10-ab48-4302-a34b-583868c23c78/indexes/agentic-rag/browser)) 
-[![LangSmith Traces](https://img.shields.io/badge/LangSmith-Traces-blueviolet)]([https://smith.langchain.com/](https://smith.langchain.com/o/856312b1-7816-4389-80cb-b01e398655be/projects/p/ffa08a3c-8ca2-4ade-8271-25651d6c74ab?timeModel=%7B%22duration%22%3A%227d%22%7D)) 
+[![Pinecone Vector DB](https://img.shields.io/badge/Pinecone-Vector_DB-3776AB?logo=pinecone\&logoColor=white)](https://app.pinecone.io/organizations/-OQOYTa7PD5A_F9pFlNC/projects/0fed2f10-ab48-4302-a34b-583868c23c78/indexes/agentic-rag/browser) 
+[![LangSmith Traces](https://img.shields.io/badge/LangSmith-Traces-blueviolet)](https://smith.langchain.com/o/856312b1-7816-4389-80cb-b01e398655be/projects/p/ffa08a3c-8ca2-4ade-8271-25651d6c74ab?timeModel=%7B%22duration%22%3A%227d%22%7D) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) 
 
 Builds an **agent‑based Retrieval‑Augmented Generation (RAG)** system that can dynamically switch between three complementary RAG strategies—**Corrective RAG, Self RAG, and Adaptive RAG**—using [LangGraph](https://python.langchain.com/docs/langgraph/) state‑machines on top of LangChain.
